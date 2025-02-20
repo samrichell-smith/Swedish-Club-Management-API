@@ -61,7 +61,20 @@ func (ts *TaskStore) GetTask(id int) (Task, error) {
 	}
 }
 
-func (ts *TaskStore) DeleteTask(id int) error
+func (ts *TaskStore) DeleteTask(id int) error {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	_, ok := ts.tasks[id]
+
+	if !ok {
+		return fmt.Errorf("task with id=%d not found", id)
+	}
+
+	delete(ts.tasks, id)
+	return nil
+}
 
 func (ts *TaskStore) DeleteAllTasks() error
 

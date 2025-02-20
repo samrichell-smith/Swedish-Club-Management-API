@@ -86,7 +86,15 @@ func (ts *TaskStore) DeleteAllTasks() error {
 }
 
 func (ts *TaskStore) GetAllTasks() []Task {
+	ts.Lock()
+	defer ts.Unlock()
 
+
+	allTasks := make([]Task, 0, len(ts.tasks))
+	for _, task := range ts.tasks {
+		allTasks = append(allTasks, task)
+	}
+	return allTasks
 }
 
 func (ts *TaskStore) GetTasksByTag(tag string) []Task {

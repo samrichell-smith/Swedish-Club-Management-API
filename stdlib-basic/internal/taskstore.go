@@ -85,8 +85,29 @@ func (ts *TaskStore) DeleteAllTasks() error {
 	return nil
 }
 
-func (ts *TaskStore) GetAllTasks() []Task
+func (ts *TaskStore) GetAllTasks() []Task {
 
-func (ts *TaskStore) GetTasksByTag(tag string) []Task
+}
+
+func (ts *TaskStore) GetTasksByTag(tag string) []Task {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	var tasks []Task
+
+
+taskloop:
+	for _, task := range ts.tasks {
+		for _, taskTag := range task.Tags {
+			if taskTag == tag {
+				tasks = append(tasks, task)
+				continue taskloop
+			}
+		}
+
+	}
+	return tasks
+}
 
 func (ts *TaskStore) GetTasksByDueDate(year int, month time.Month, day int) []Task

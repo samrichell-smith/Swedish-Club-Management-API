@@ -1,6 +1,7 @@
 package taskstore
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -47,7 +48,18 @@ func (ts *TaskStore) CreateTask(text string, tags []string, due time.Time) int {
 	return task.Id
 }
 
-func (ts *TaskStore) GetTask(id int) (Task, error)
+func (ts *TaskStore) GetTask(id int) (Task, error) {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	t, ok := ts.tasks[id]
+	if ok {
+		return t, nil
+	} else {
+		return Task{}, fmt.Errorf("task with id=%d not found", id)
+	}
+}
 
 func (ts *TaskStore) DeleteTask(id int) error
 

@@ -19,6 +19,8 @@ type TaskStore struct {
 	nextId int
 }
 
+func main()
+
 func New() *TaskStore
 
 func (ts *TaskStore) CreateTask(text string, tags []string, due time.Time) int 

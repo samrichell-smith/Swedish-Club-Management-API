@@ -118,4 +118,19 @@ taskloop:
 	return tasks
 }
 
-func (ts *TaskStore) GetTasksByDueDate(year int, month time.Month, day int) []Task
+func (ts *TaskStore) GetTasksByDueDate(year int, month time.Month, day int) []Task {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	var tasks []Task
+
+	for _, task := range ts.tasks {
+		y, m, d := task.Due.Date()
+		if y == year && m == month && d == day {
+			tasks = append(tasks, task)
+		}
+	}
+
+	return tasks
+}

@@ -76,7 +76,14 @@ func (ts *TaskStore) DeleteTask(id int) error {
 	return nil
 }
 
-func (ts *TaskStore) DeleteAllTasks() error
+func (ts *TaskStore) DeleteAllTasks() error {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	ts.tasks = make(map[int]Task)
+	return nil
+}
 
 func (ts *TaskStore) GetAllTasks() []Task
 

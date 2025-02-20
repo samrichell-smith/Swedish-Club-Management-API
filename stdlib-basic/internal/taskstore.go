@@ -28,7 +28,24 @@ func New() *TaskStore {
 	return ts
 }
 
-func (ts *TaskStore) CreateTask(text string, tags []string, due time.Time) int 
+func (ts *TaskStore) CreateTask(text string, tags []string, due time.Time) int {
+	ts.Lock()
+	defer ts.Unlock()
+
+
+	task := Task {
+		Id: ts.nextId,
+		Text: text,
+		Due: due,
+	}
+
+	task.Tags = make([]string, len(tags))
+	copy(task.Tags, tags)
+
+	ts.tasks[ts.nextId] = task
+	ts.nextId++
+	return task.Id
+}
 
 func (ts *TaskStore) GetTask(id int) (Task, error)
 

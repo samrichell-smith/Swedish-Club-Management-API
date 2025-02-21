@@ -131,3 +131,8 @@ func (ts *taskServer) deleteTaskHandler(w http.ResponseWriter, req *http.Request
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
 }
+
+func (ts *taskServer) deleteAllTasksHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("handling delete all tasks at %s\n", req.URL.Path)
+	ts.store.DeleteAllTasks()
+}

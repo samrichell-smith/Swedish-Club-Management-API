@@ -136,3 +136,18 @@ func (ts *taskServer) deleteAllTasksHandler(w http.ResponseWriter, req *http.Req
 	log.Printf("handling delete all tasks at %s\n", req.URL.Path)
 	ts.store.DeleteAllTasks()
 }
+
+func (ts *taskServer) tagHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("handling tasks by tag at %s\n", req.URL.Path)
+
+	tag := req.PathValue("tag")
+
+	tasks := ts.store.GetTasksByTag(tag)
+	js, err := json.Marshal(tasks)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}

@@ -33,5 +33,10 @@ func TestCreateAndGet(t *testing.T) {
 		t.Fatal("got nil, want error")
 	}
 
+	ts.CreateTask("hey", nil, time.Now())
+	allTasks2 := ts.GetAllTasks()
+	if len(allTasks2) != 2 {
+		t.Errorf("got len(allTasks2)=%d, want 2", len(allTasks2))
+	}
 
 }

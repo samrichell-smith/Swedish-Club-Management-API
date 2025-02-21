@@ -1,3 +1,3 @@
-module github.com/samrichell-smith/Go-Rest-Server
+module stdlib-basic
 
 go 1.23.4

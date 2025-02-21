@@ -79,8 +79,21 @@ func (ts *taskServer) createTaskHandler(w http.ResponseWriter, req *http.Request
 	w.Write(js)
 }
 
+func (ts *taskServer) getAllTasksHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("handling get all tasks at %s\n", req.URL.Path)
+
+	allTasks := ts.store.GetAllTasks()
+	js, err := json.Marshal(allTasks)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
 func (ts *taskServer) getTaskHandler(w http.ResponseWriter, req *http.Request) {
-	log.Printf("handling get task at %s\n", req.URL.path)
+	log.Printf("handling get task at %s\n", req.URL.Path)
 
 	id, err := strconv.Atoi(req.PathValue("id"))
 	if err != nil {

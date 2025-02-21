@@ -25,7 +25,12 @@ func TestCreateAndGet(t *testing.T) {
 
 	allTasks := ts.GetAllTasks()
 	if len(allTasks) != 1 || allTasks[0].Id != id {
-		t.Errorf("got len(allTasks)=%d, allTasks[0].Id=%d; want 1, %d", len(allTasks), allTasks[0].Id, idS)
+		t.Errorf("got len(allTasks)=%d, allTasks[0].Id=%d; want 1, %d", len(allTasks), allTasks[0].Id, id)
+	}
+
+	_, err = ts.GetTask(id + 1)
+	if err == nil {
+		t.Fatal("got nil, want error")
 	}
 
 

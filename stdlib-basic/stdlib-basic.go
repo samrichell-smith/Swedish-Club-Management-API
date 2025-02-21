@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"mime"
 	"net/http"
@@ -150,4 +151,32 @@ func (ts *taskServer) tagHandler(w http.ResponseWriter, req *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
+}
+
+func (ts *taskServer) dueHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("handling tasks by due at %s\n", req.URL.Path)
+
+	badRequestError := func() {
+		http.Error(w, fmt.Sprintf("expect /due/<year>/<month>/<day>, got %v", req.URL.Path), http.StatusBadRequest)
+	}
+
+	year, errYear := strconv.Atoi(req.PathValue("year"))
+	month, errMonth := strconv.Atoi(req.PathValue("month"))
+	day, errDay := strconv.Atoi(req.PathValue("day"))
+
+	if errYear != nil || errMonth != nil || errDay != nil || month < int(time.January) || month > int(time.December) {
+		badRequestError()
+		return
+	}
+
+	tasks := ts.store.GetTasksByDueDate(year, time.Month(month), day)
+	js, err := json.Marshal(tasks)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+	
 }

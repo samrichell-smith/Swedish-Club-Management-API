@@ -116,3 +116,18 @@ func (ts *taskServer) getTaskHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
 }
+
+func (ts *taskServer) deleteTaskHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("handling delete task at %s\n", req.URL.Path)
+
+	id, err := strconv.Atoi(req.PathValue("id"))
+	if err != nil {
+		http.Error(w, "invalid id", http.StatusBadRequest)
+		return
+	}
+
+	err = ts.store.DeleteTask(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+}

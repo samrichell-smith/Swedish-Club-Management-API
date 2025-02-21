@@ -18,4 +18,15 @@ func TestCreateAndGet(t *testing.T) {
 	if task.Id != id {
 		t.Errorf("got task.Id=%d, id=%d", task.Id, id)
 	}
+
+	if task.Text != "Hola" {
+		t.Errorf("got Text=%v, want %v", task.Text, "Hola")
+	}
+
+	allTasks := ts.GetAllTasks()
+	if len(allTasks) != 1 || allTasks[0].Id != id {
+		t.Errorf("got len(allTasks)=%d, allTasks[0].Id=%d; want 1, %d", len(allTasks), allTasks[0].Id, idS)
+	}
+
+
 }

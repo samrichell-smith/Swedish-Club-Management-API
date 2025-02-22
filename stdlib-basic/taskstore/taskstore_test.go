@@ -40,3 +40,24 @@ func TestCreateAndGet(t *testing.T) {
 	}
 
 }
+
+func TestDelete(t *testing.T) {
+	ts := New()
+	id1 := ts.CreateTask("Foo", nil, time.Now())
+	id2 := ts.CreateTask("Bar", nil, time.Now())
+
+	if err := ts.DeleteTask(id1 + 1001); err == nil {
+		t.Fatalf("delete task id=%d, got no error; want error", id1+1001)
+	}
+
+	if err := ts.DeleteTask(id1); err != nil {
+		t.Fatal(err)
+	}
+	if err := ts.DeleteTask(id1); err == nil {
+		t.Fatalf("delete task id=%d, got no error; want error", id1)
+	}
+
+	if err := ts.DeleteTask(id2); err != nil {
+		t.Fatal(err)
+	}
+}

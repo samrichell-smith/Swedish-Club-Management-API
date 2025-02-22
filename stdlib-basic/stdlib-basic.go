@@ -34,7 +34,14 @@ func main() {
 	mux.HandleFunc("GET /tag/{tag}/", server.tagHandler)
 	mux.HandleFunc("GET /due/{year}/{month}/{day}/", server.dueHandler)
 
-	log.Fatal(http.ListenAndServe("localhost:"+os.Getenv("SERVERPORT"), mux))
+	port := os.Getenv("SERVERPORT")
+	if port == "" {
+		port = "8081" 
+	}
+
+
+	log.Fatal(http.ListenAndServe("localhost:"+port, mux))
+
 }
 
 func (ts *taskServer) createTaskHandler(w http.ResponseWriter, req *http.Request) {

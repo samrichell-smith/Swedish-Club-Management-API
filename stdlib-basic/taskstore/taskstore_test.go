@@ -104,3 +104,53 @@ func TestGetTasksByTag(t *testing.T) {
 		})
 	}
 }
+
+func TestGetTasksByDueDate(t *testing.T) {
+	timeFormat := "2006-Jan-02"
+	mustParseDate := func(tstr string) time.Time {
+		tt, err := time.Parse(timeFormat, tstr)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return tt
+	}
+
+	ts := New()
+	ts.CreateTask("XY1", nil, mustParseDate("2020-Dec-01"))
+	ts.CreateTask("XY2", nil, mustParseDate("2000-Dec-21"))
+	ts.CreateTask("XY3", nil, mustParseDate("2020-Dec-01"))
+	ts.CreateTask("XY4", nil, mustParseDate("2000-Dec-21"))
+	ts.CreateTask("XY5", nil, mustParseDate("1991-Jan-01"))
+
+	// Check a single task can be fetched.
+	y, m, d := mustParseDate("1991-Jan-01").Date()
+	tasks1 := ts.GetTasksByDueDate(y, m, d)
+	if len(tasks1) != 1 {
+		t.Errorf("got len=%d, want 1", len(tasks1))
+	}
+	if tasks1[0].Text != "XY5" {
+		t.Errorf("got Text=%s, want XY5", tasks1[0].Text)
+	}
+
+	var tests = []struct {
+		date    string
+		wantNum int
+	}{
+		{"2020-Jan-01", 0},
+		{"2020-Dec-01", 2},
+		{"2000-Dec-21", 2},
+		{"1991-Jan-01", 1},
+		{"2020-Dec-21", 0},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.date, func(t *testing.T) {
+			y, m, d := mustParseDate(tt.date).Date()
+			numByDate := len(ts.GetTasksByDueDate(y, m, d))
+
+			if numByDate != tt.wantNum {
+				t.Errorf("got %v, want %v", numByDate, tt.wantNum)
+			}
+		})
+	}
+}

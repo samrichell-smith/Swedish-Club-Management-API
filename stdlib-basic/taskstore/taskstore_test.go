@@ -61,3 +61,18 @@ func TestDelete(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDeleteAll(t *testing.T) {
+	ts := New()
+	ts.CreateTask("Foo", nil, time.Now())
+	ts.CreateTask("Bar", nil, time.Now())
+
+	if err := ts.DeleteAllTasks(); err != nil {
+		t.Fatal(err)
+	}
+
+	tasks := ts.GetAllTasks()
+	if len(tasks) > 0 {
+		t.Fatalf("want no tasks remaining; got %v", tasks)
+	}
+}

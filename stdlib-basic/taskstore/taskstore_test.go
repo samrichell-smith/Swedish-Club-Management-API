@@ -76,3 +76,31 @@ func TestDeleteAll(t *testing.T) {
 		t.Fatalf("want no tasks remaining; got %v", tasks)
 	}
 }
+
+func TestGetTasksByTag(t *testing.T) {
+	ts := New()
+	ts.CreateTask("XY", []string{"Movies"}, time.Now())
+	ts.CreateTask("YZ", []string{"Bills"}, time.Now())
+	ts.CreateTask("YZR", []string{"Bills"}, time.Now())
+	ts.CreateTask("YWZ", []string{"Bills", "Movies"}, time.Now())
+	ts.CreateTask("WZT", []string{"Movies", "Bills"}, time.Now())
+
+	var tests = []struct {
+		tag     string
+		wantNum int
+	}{
+		{"Movies", 3},
+		{"Bills", 4},
+		{"Ferrets", 0},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.tag, func(t *testing.T) {
+			numByTag := len(ts.GetTasksByTag(tt.tag))
+
+			if numByTag != tt.wantNum {
+				t.Errorf("got %v, want %v", numByTag, tt.wantNum)
+			}
+		})
+	}
+}

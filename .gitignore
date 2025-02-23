@@ -1,0 +1,19 @@
+# Ignore binary files
+/bin/
+/obj/
+
+# Ignore environment variable files
+.env
+
+# Ignore Go build artifacts
+*.exe
+*.test
+*.out
+
+# Ignore vendor directory if you are using Go modules
+/vendor/
+
+# Ignore IDE/editor specific files
+.idea/
+.vscode/
+*.swp

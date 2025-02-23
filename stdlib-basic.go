@@ -11,8 +11,6 @@ import (
 	"time"
 
 	"stdlib-basic/taskstore"
-
-	"github.com/joho/godotenv"
 )
 
 type taskServer struct {
@@ -28,10 +26,7 @@ func main() {
 	mux := http.NewServeMux()
 	server := NewTaskServer()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	
 
 
 	mux.HandleFunc("POST /task/", server.createTaskHandler)

@@ -34,13 +34,15 @@ func main() {
 	mux.HandleFunc("GET /tag/{tag}/", server.tagHandler)
 	mux.HandleFunc("GET /due/{year}/{month}/{day}/", server.dueHandler)
 
+	handler := enableCORS(mux)
+
 	port := os.Getenv("SERVERPORT")
 	if port == "" {
 		port = "8082" 
 	}
 
 
-	log.Fatal(http.ListenAndServe("localhost:"+port, mux))
+	log.Fatal(http.ListenAndServe("localhost:"+port, handler))
 
 }
 

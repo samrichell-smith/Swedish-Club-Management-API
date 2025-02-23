@@ -45,9 +45,7 @@ func main() {
 	handler := enableCORS(mux)
 
 	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8082" 
-	}
+	
 
 
 	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, handler))

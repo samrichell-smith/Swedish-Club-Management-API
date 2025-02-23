@@ -50,7 +50,7 @@ func main() {
 	}
 
 
-	log.Fatal(http.ListenAndServe("localhost:"+port, handler))
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, handler))
 
 }
 

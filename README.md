@@ -63,6 +63,23 @@ It serves as the backend for our <a>task management dashboard,</a> making it eas
   </tbody>
 </table>
 
+<h2>Example Usage</h2>
+
+<h3>Creating a Task</h3>
+
+**Request:**  
+To create a new task, send a `POST` request to `/task/` with the following JSON payload:
+
+```json
+{
+  "title": "Organise Catering for Fika",
+  "description": "Order $180 of assorted cakes from Scandibunz using our club discount code",
+  "tag": "event", "fika", "scandibunz",
+  "due_date": "2025-07-15"
+}
+
+```
+
 
 <h2>Features</h2>
 

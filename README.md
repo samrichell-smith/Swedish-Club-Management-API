@@ -2,7 +2,7 @@
 <h1>Swedish Club Management API</h1>
 
 <p>
-  <strong>A task management API built with Go to streamline executive responsibilities within the Swedish Club.</strong>
+  <strong>A task management API built with Go to streamline executive responsibilities within the University of Auckland Swedish Club.</strong>
 </p>
 
 <h2>Overview</h2>
@@ -66,10 +66,11 @@ It serves as the backend for our <a>task management dashboard,</a> making it eas
 
 <h2>Features</h2>
 
-- Create, retrieve, delete, and filter tasks  
+- Create, retrieve, delete, and filter tasks
+- Hosted and deployed for real-world use, powering our club management
 - RESTful API design following best practices  
 - CORS-enabled for frontend integration  
-- Hosted and deployed for real-world use  
+
 
 <h2>Tech Stack</h2>
 

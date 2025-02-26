@@ -72,10 +72,9 @@ To create a new task, send a `POST` request to `/task/` with the following JSON 
 
 ```json
 {
-  "title": "Organise Catering for Fika",
-  "description": "Order $180 of assorted cakes from Scandibunz using our club discount code",
-  "tag": "event", "fika", "scandibunz",
-  "due_date": "2025-07-15"
+  "text": "Organise Catering for Fika from Scandibunz",
+  "tags": ["event", "fika", "scandibunz"], 
+  "due": "2025-06-25T14:00:00Z"
 }
 
 ```

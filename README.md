@@ -83,7 +83,7 @@ To create a new task, send a `POST` request to `/task/` with the following JSON 
 <h2>Features</h2>
 
 - Create, retrieve, delete, and filter tasks
-- Hosted and deployed for real-world use, powering our club management
+- Hosted and deployed for real-world use, powering our <a href="https://github.com/samrichell-smith/Swedish-Club-Management-Dashboard">Club Management Dashboard</a>
 - RESTful API design following best practices  
 - CORS-enabled for frontend integration  
 

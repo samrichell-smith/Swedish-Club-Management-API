@@ -9,6 +9,7 @@
 *.exe
 *.test
 *.out
+main
 
 # Ignore vendor directory if you are using Go modules
 /vendor/
